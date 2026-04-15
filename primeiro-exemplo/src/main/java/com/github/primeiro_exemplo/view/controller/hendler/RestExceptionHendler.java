@@ -1,4 +1,4 @@
-package com.github.primeiro_exemplo.hendler;
+package com.github.primeiro_exemplo.view.controller.hendler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
