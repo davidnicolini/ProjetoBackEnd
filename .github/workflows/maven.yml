@@ -22,4 +22,4 @@ jobs:
         cache: 'maven' # Adiciona cache para os downloads do Maven ficarem muito mais rápidos
 
     - name: Compilar e Rodar Testes Automatizados
-      run: mvn -B clean verify
+      run: ./mvnw -B clean verify
