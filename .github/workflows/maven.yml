@@ -1,0 +1,25 @@
+name: Java CI com Maven
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar o código do repositório
+      uses: actions/checkout@v4
+
+    - name: Configurar o JDK (Ajuste para a versão do seu projeto)
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11' # Altere para '17' ou '21' se o seu projeto usar uma versão mais recente
+        distribution: 'temurin'
+        cache: 'maven' # Adiciona cache para os downloads do Maven ficarem muito mais rápidos
+
+    - name: Compilar e Rodar Testes Automatizados
+      run: mvn -B clean verify
