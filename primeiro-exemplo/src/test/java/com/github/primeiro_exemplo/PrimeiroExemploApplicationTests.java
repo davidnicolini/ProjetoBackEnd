@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-@ActiveProfiles("test") // <-- Força o Spring a usar as configurações de teste
+@ActiveProfiles("test") 
 class PrimeiroExemploApplicationTests {
 
     @Test
