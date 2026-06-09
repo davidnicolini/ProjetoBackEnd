@@ -59,7 +59,7 @@ O projeto utiliza o PostgreSQL como motor de banco de dados. Um exemplo da model
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com
+   git clone https://github.com/davidnicolini/ProjetoBackEnd
    cd ProjetoBackEnd
    ```
 
