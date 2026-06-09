@@ -17,9 +17,10 @@ jobs:
     - name: Configurar o JDK (Ajuste para a versão do seu projeto)
       uses: actions/setup-java@v4
       with:
-        java-version: '11' # Altere para '17' ou '21' se o seu projeto usar uma versão mais recente
+        java-version: '17' 
         distribution: 'temurin'
-        cache: 'maven' # Adiciona cache para os downloads do Maven ficarem muito mais rápidos
+        cache: 'maven' 
 
     - name: Compilar e Rodar Testes Automatizados
-      run: ./mvnw -B clean verify
+      run: mvn -B clean verify
+      working-directory: primeiro-exemplo
