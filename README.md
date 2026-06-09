@@ -1,12 +1,15 @@
 # 🚀 API RestFull de Gerenciamento Corporativo 
+
+[![Java CI com Maven](https://github.com)](https://github.com)
+
 <div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="30" alt="java logo"  />
+  <img src="https://jsdelivr.net" height="30" alt="java logo"  />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" height="30" alt="spring logo"  />
+  <img src="https://jsdelivr.net" height="30" alt="spring logo"  />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="30" alt="postgresql logo"  />
+  <img src="https://jsdelivr.net" height="30" alt="postgresql logo"  />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="30" alt="vscode"  />
+  <img src="https://jsdelivr.net" height="30" alt="vscode"  />
   <img width="12" />
 </div>
 
@@ -14,7 +17,7 @@ Uma API RESTful robusta desenvolvida para consolidar conhecimentos no ecossistem
 
 ## 🛠️ Tecnologias e Ferramentas Utilizadas
 
-* **Linguagem Principal:** Java 11 (ou a versão utilizada no pom.xml)
+* **Linguagem Principal:** Java 11
 * **Framework Core:** Spring Boot (Spring Web)
 * **Persistência de Dados:** Spring Data JPA / Hibernate
 * **Banco de Dados:** PostgreSQL
@@ -28,6 +31,23 @@ Uma API RESTful robusta desenvolvida para consolidar conhecimentos no ecossistem
 * **Persistência Segura:** Estrutura de banco de dados baseada em scripts SQL relacionais otimizados.
 * **Integração Contínua (CI):** Verificação automatizada de integridade do código a cada `git push` na branch principal.
 
+## 🛣️ Endpoints da API
+
+Abaixo estão listadas as rotas principais da aplicação para o gerenciamento do ecossistema comercial:
+
+| Recurso | Método | Endpoint | Descrição |
+| :--- | :--- | :--- | :--- |
+| **Produtos** | `GET` | `/api/produtos` | Lista todos os produtos com paginação |
+| | `GET` | `/api/produtos/{id}` | Busca os detalhes de um produto específico |
+| | `POST` | `/api/produtos` | Cadastra um novo produto no estoque |
+| | `PUT` | `/api/produtos/{id}` | Atualiza informações de preço ou estoque |
+| | `DELETE`| `/api/produtos/{id}` | Remove um produto do catálogo |
+| **Clientes** | `GET` | `/api/clientes` | Retorna a lista de clientes cadastrados |
+| | `POST` | `/api/clientes` | Cria um novo perfil de cliente |
+| **Vendas** | `POST` | `/api/vendas` | Registra um novo pedido/venda e baixa no estoque |
+
+> 💡 *Nota: Caso os caminhos (`/api/...`) ou nomes das entidades no seu código Java sejam ligeiramente diferentes, você pode alterar os termos desta tabela diretamente para refletir as suas classes `@RestController`.*
+
 ## 📁 Estrutura do Banco de Dados
 
 O projeto utiliza o PostgreSQL como motor de banco de dados. Um exemplo da modelagem relacional utilizada para os testes de regras de negócio pode ser encontrado no arquivo raiz:
@@ -36,7 +56,7 @@ O projeto utiliza o PostgreSQL como motor de banco de dados. Um exemplo da model
 ## 🚀 Como Executar o Projeto Localmente
 
 ### Pré-requisitos
-* Java JDK instalado
+* Java JDK 11 instalado
 * Maven instalado
 * PostgreSQL configurado e rodando localmente
 
@@ -67,11 +87,10 @@ O projeto utiliza o PostgreSQL como motor de banco de dados. Um exemplo da model
 
 ## 🔄 Esteira de CI/CD (GitHub Actions)
 
-Este repositório conta com um fluxo de **Integração Contínua (CI)** configurado via GitHub Actions (`.github/workflows/`). A cada atualização de código enviada ao repositório, a esteira executa de forma automática:
+Este repositório conta com um fluxo de **Integração Contínua (CI)** configurado via GitHub Actions (`.github/workflows/maven.yml`). A cada atualização de código enviada ao repositório, a esteira executa de forma automática:
 1. O download e cache das dependências do Maven.
-2. A compilação completa do código Java.
+2. A compilação completa do código Java 11.
 3. A execução de testes e validação de pacotes corporativos (`mvn clean verify`).
 
 ---
 Desenvolvido por [David Nicolini](https://github.com).
-Use code with caution.
