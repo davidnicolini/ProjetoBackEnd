@@ -15,10 +15,10 @@ Uma API RESTful robusta desenvolvida para consolidar conhecimentos no ecossistem
 
 ## 🛠️ Tecnologias e Ferramentas Utilizadas
 
-* **Linguagem Principal:** Java 11
+* **Linguagem Principal:** Java 17
 * **Framework Core:** Spring Boot (Spring Web)
 * **Persistência de Dados:** Spring Data JPA / Hibernate
-* **Banco de Dados:** PostgreSQL
+* **Banco de Dados:** PostgreSQL e H2 para testes
 * **Gerenciador de Dependências:** Maven
 * **DevOps / CI/CD:** GitHub Actions (Automação de Build e Testes)
 
@@ -40,9 +40,6 @@ Abaixo estão listadas as rotas principais da aplicação para o gerenciamento d
 | | `POST` | `/api/produtos` | Cadastra um novo produto no estoque |
 | | `PUT` | `/api/produtos/{id}` | Atualiza informações de preço ou estoque |
 | | `DELETE`| `/api/produtos/{id}` | Remove um produto do catálogo |
-| **Clientes** | `GET` | `/api/clientes` | Retorna a lista de clientes cadastrados |
-| | `POST` | `/api/clientes` | Cria um novo perfil de cliente |
-| **Vendas** | `POST` | `/api/vendas` | Registra um novo pedido/venda e baixa no estoque |
 
 > 💡 *Nota: Caso os caminhos (`/api/...`) ou nomes das entidades no seu código Java sejam ligeiramente diferentes, você pode alterar os termos desta tabela diretamente para refletir as suas classes `@RestController`.*
 
@@ -54,7 +51,7 @@ O projeto utiliza o PostgreSQL como motor de banco de dados. Um exemplo da model
 ## 🚀 Como Executar o Projeto Localmente
 
 ### Pré-requisitos
-* Java JDK 11 instalado
+* Java JDK 17 instalado
 * Maven instalado
 * PostgreSQL configurado e rodando localmente
 
@@ -75,7 +72,7 @@ O projeto utiliza o PostgreSQL como motor de banco de dados. Um exemplo da model
    ```
 
 3. **Execute os scripts iniciais:**
-   Instancie as tabelas utilizando o arquivo `teste-padaria.sql` no seu cliente de banco de dados (ex: pgAdmin, DBeaver).
+   Instancie as tabelas utilizando o arquivo `teste-padaria.sql` no seu cliente de banco de dados.
 
 4. **Rode a aplicação:**
    ```bash
