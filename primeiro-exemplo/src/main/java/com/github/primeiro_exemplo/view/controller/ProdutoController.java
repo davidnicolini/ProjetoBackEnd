@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.primeiro_exemplo.services.ProdutoService;
 import com.github.primeiro_exemplo.shared.ProdutoDTO;
 import com.github.primeiro_exemplo.view.model.ProdutoResponse;
-import com.github.primeiro_exemplo.model.Produto;
+import com.github.primeiro_exemplo.view.model.ProdutoRequest;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,50 +29,57 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    // Instanciar o mapper uma vez ou injetar via Spring como melhor prática
+    private final ModelMapper mapper = new ModelMapper();
+
     @GetMapping
     public ResponseEntity<List<ProdutoResponse>> obterTodos() {
         List<ProdutoDTO> produtos = produtoService.obterTodos();
         
-        ModelMapper mapper = new ModelMapper();
-
         List<ProdutoResponse> resposta = produtos.stream()
-        .map(produtoDTO -> mapper.map(produtoDTO, ProdutoResponse.class)).collect(Collectors.toList());
+            .map(produtoDTO -> mapper.map(produtoDTO, ProdutoResponse.class))
+            .collect(Collectors.toList());
               
         return new ResponseEntity<>(resposta, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Produto>> obterPorId(@PathVariable Integer id) {
-        //try{
+    public ResponseEntity<Optional<ProdutoResponse>> obterPorId(@PathVariable Integer id) {
+        Optional<ProdutoDTO> dto = produtoService.obterPorId(id);
 
-        Optional <ProdutoDTO> dto = produtoService.obterPorId(id);
+        if (dto.isPresent()) {
+            ProdutoResponse produtoResponse = mapper.map(dto.get(), ProdutoResponse.class);
+            return new ResponseEntity<>(Optional.of(produtoResponse), HttpStatus.OK);
+        }
 
-        ProdutoResponse produto = new ModelMapper().map(dto.get(),ProdutoResponse.class);
-
-        return new ResponseEntity<>(Optional.of(produtoDTO), HttpStatus.OK);
-
-        //} catch (Exception e){
-         //   return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        //}
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public Produto adicionar(@RequestBody Produto produto) {
-        // Poderia ter uma regra de negocios aqui para validar o produto;
-        return produtoService.adicionar(produto);
+    public ResponseEntity<ProdutoResponse> adicionar(@RequestBody ProdutoDTO produtoDto) {
+        // O controller recebe o DTO do cliente, envia pro Service processar
+        ProdutoDTO dtoCadastrado = produtoService.adicionar(produtoDto);
+        
+        // Converte o resultado para ProdutoResponse para devolver ao cliente
+        ProdutoResponse resposta = mapper.map(dtoCadastrado, ProdutoResponse.class);
+        
+        return new ResponseEntity<>(resposta, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public String deletar(@PathVariable Integer id) {
-        // Aqui poderia ter uma logica
+    public ResponseEntity<String> deletar(@PathVariable Integer id) {
         produtoService.deletar(id);
-        return "Produto com o id: " + id + ", foi deletado com sucesso!";
+        return new ResponseEntity<>("Produto com o id: " + id + ", foi deletado com sucesso!", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public Produto atualizar(@PathVariable Integer id, @RequestBody Produto produto) {
-        // Ter uma validação do Id
-        produto.setId(id);
-        return produtoService.atualizar(id, produto);
+    public ResponseEntity<ProdutoResponse> atualizar(@PathVariable Integer id, @RequestBody ProdutoDTO produtoDto) {
+        // Envia o DTO para o Service atualizar a regra de negócio
+        ProdutoDTO dtoAtualizado = produtoService.atualizar(id, produtoDto);
+        
+        // Converte o DTO atualizado para Response
+        ProdutoResponse resposta = mapper.map(dtoAtualizado, ProdutoResponse.class);
+        
+        return new ResponseEntity<>(resposta, HttpStatus.OK);
     }
 }
