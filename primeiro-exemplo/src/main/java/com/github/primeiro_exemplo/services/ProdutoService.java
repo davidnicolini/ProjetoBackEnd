@@ -1,6 +1,5 @@
 package com.github.primeiro_exemplo.services;
 
-import com.github.primeiro_exemplo.PrimeiroExemploApplication;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.primeiro_exemplo.PrimeiroExemploApplication;
 import com.github.primeiro_exemplo.model.Produto;
 import com.github.primeiro_exemplo.model.exception.ResourceNotFoundException;
 import com.github.primeiro_exemplo.repository.ProdutoRepository;
@@ -18,6 +18,7 @@ import com.github.primeiro_exemplo.shared.ProdutoDTO;
 public class ProdutoService {
 
     private final PrimeiroExemploApplication primeiroExemploApplication;
+    
     @Autowired
     private ProdutoRepository produtoRepository;
 
