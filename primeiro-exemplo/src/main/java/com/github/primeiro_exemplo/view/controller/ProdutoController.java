@@ -1,7 +1,6 @@
 package com.github.primeiro_exemplo.view.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -25,17 +24,15 @@ import com.github.primeiro_exemplo.view.model.ProdutoResponse;
 public class ProdutoController {
 
     private final ProdutoService produtoService;
-
-    // Instanciar o mapper uma vez ou injetar via Spring como melhor prática
     private final ModelMapper mapper = new ModelMapper();
 
-    ProdutoController(ProdutoService produtoService) {
+    public ProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdutoResponse>> obterTodos() {
-        List<ProdutoDTO> produtos = produtoService.obterTodos();
+    public ResponseEntity<List<ProdutoResponse>> listarTodosProdutos() {
+        List<ProdutoDTO> produtos = produtoService.listarTodosProdutos();
         
         List<ProdutoResponse> resposta = produtos.stream()
             .map(produtoDTO -> mapper.map(produtoDTO, ProdutoResponse.class))
@@ -45,42 +42,32 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ProdutoResponse>> obterPorId(@PathVariable Integer id) {
-        Optional<ProdutoDTO> dto = produtoService.obterPorId(id);
-
-        if (dto.isPresent()) {
-            ProdutoResponse produtoResponse = mapper.map(dto.get(), ProdutoResponse.class);
-            return new ResponseEntity<>(Optional.of(produtoResponse), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<ProdutoResponse> obterProdutoPorId(@PathVariable Integer id) {
+        return produtoService.obterProdutoPorId(id)
+            .map(produtoDTO -> mapper.map(produtoDTO, ProdutoResponse.class))
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoResponse> adicionar(@RequestBody ProdutoDTO produtoDto) {
-        // O controller recebe o DTO do cliente, envia pro Service processar
-        ProdutoDTO dtoCadastrado = produtoService.adicionar(produtoDto);
-        
-        // Converte o resultado para ProdutoResponse para devolver ao cliente
-        ProdutoResponse resposta = mapper.map(dtoCadastrado, ProdutoResponse.class);
+    public ResponseEntity<ProdutoResponse> adicionarProduto(@RequestBody ProdutoDTO produtoDto) {
+       
+        ProdutoDTO produtoDTOCadastrado = produtoService.adicionarProduto(produtoDto);
+        ProdutoResponse resposta = mapper.map(produtoDTOCadastrado, ProdutoResponse.class);
         
         return new ResponseEntity<>(resposta, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletar(@PathVariable Integer id) {
-        produtoService.deletar(id);
+    public ResponseEntity<String> deletarProduto(@PathVariable Integer id) {
+        produtoService.deletarProduto(id);
         return new ResponseEntity<>("Produto com o id: " + id + ", foi deletado com sucesso!", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> atualizar(@PathVariable Integer id, @RequestBody ProdutoDTO produtoDto) {
-        // Envia o DTO para o Service atualizar a regra de negócio
-        ProdutoDTO dtoAtualizado = produtoService.atualizar(id, produtoDto);
-        
-        // Converte o DTO atualizado para Response
+    public ResponseEntity<ProdutoResponse> atualizarProduto(@PathVariable Integer id, @RequestBody ProdutoDTO produtoDto) {
+        ProdutoDTO dtoAtualizado = produtoService.atualizarProduto(id, produtoDto);
         ProdutoResponse resposta = mapper.map(dtoAtualizado, ProdutoResponse.class);
-        
         return new ResponseEntity<>(resposta, HttpStatus.OK);
     }
 }
