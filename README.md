@@ -40,6 +40,11 @@ Abaixo estão listadas as rotas principais da aplicação para o gerenciamento d
 | | `POST` | `/api/produtos` | Cadastra um novo produto no estoque |
 | | `PUT` | `/api/produtos/{id}` | Atualiza informações de preço ou estoque |
 | | `DELETE`| `/api/produtos/{id}` | Remove um produto do catálogo |
+| **Clientes** | `GET` | `/api/clientes` | Lista todos os clientes com paginação |
+| | `GET` | `/api/clientes/{id}` | Busca os detalhes de um cliente específico |
+| | `POST` | `/api/clientes` | Cadastra um novo cliente no estoque |
+| | `PUT` | `/api/clientes/{id}` | Atualiza informações como nome, email e telefone |
+| | `DELETE`| `/api/clientes/{id}` | Remove um cliente da carteira |
 
 > 💡 *Nota: Caso os caminhos (`/api/...`) ou nomes das entidades no seu código Java sejam ligeiramente diferentes, você pode alterar os termos desta tabela diretamente para refletir as suas classes `@RestController`.*
 
